@@ -71,6 +71,7 @@ namespace Lab2Solution
                 con.Open();
                 var sql = "INSERT INTO entries (id, clue, answer, difficutly, date) VALUES(@id, @clue, @answer, @difficulty, @date)";
                 using var cmd = new NpgsqlCommand(sql, con);
+                // replaces the @var_name with their value
                 cmd.Parameters.AddWithValue("id", entry.Id);
                 cmd.Parameters.AddWithValue("clue", entry.Clue);
                 cmd.Parameters.AddWithValue("answer", entry.Answer);
@@ -126,8 +127,6 @@ namespace Lab2Solution
                 int numRowsAffected = cmd.ExecuteNonQuery();
                 Console.WriteLine($"The # of rows deleted was {numRowsAffected}");
                 con.Close(); // Write the SQL to DELETE entry from bit.io. You have its id, that should be all that you need
-
-
 
                 return true;
             }
@@ -188,6 +187,7 @@ namespace Lab2Solution
         /// <returns>all of the entries</returns>
         public ObservableCollection<Entry> GetEntries()
         {
+            // TODO: why is this happening instead of . .  Clear()
             while (entries.Count > 0)
             {
                 entries.RemoveAt(0);
@@ -196,7 +196,7 @@ namespace Lab2Solution
             using var con = new NpgsqlConnection(connectionString);
             con.Open();
 
-            var sql = "SELECT * FROM \"entries\" limit 10;";
+            var sql = "SELECT * FROM \"entries\";";
 
             using var cmd = new NpgsqlCommand(sql, con);
 
@@ -213,11 +213,7 @@ namespace Lab2Solution
                 Console.Write("\n");
                 entries.Add(new Entry(reader[0] as String, reader[1] as String, (int)reader[2], reader[3] as String, (int)reader[4]));
             }
-
             con.Close();
-
-
-
             return entries;
         }
     }

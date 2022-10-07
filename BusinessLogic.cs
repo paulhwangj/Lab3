@@ -19,8 +19,8 @@ namespace Lab2Solution
 
         public BusinessLogic()
         {
-            // TODO: change this to be Relational
-            db = new FlatFileDatabase(); // new RelationalDatabase();           // 
+            // db = new FlatFileDatabase();
+            db = new RelationalDatabase();
         }
 
 
@@ -40,7 +40,7 @@ namespace Lab2Solution
         }
 
         /// <summary>
-        /// Verifies that all the entry fields are valied
+        /// Verifies that all the entry fields are valid
         /// </summary>
         /// <param name="clue"></param>
         /// <param name="answer"></param>

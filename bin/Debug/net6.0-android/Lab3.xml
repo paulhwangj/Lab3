@@ -18,7 +18,7 @@
         </member>
         <member name="M:Lab2Solution.BusinessLogic.CheckEntryFields(System.String,System.String,System.Int32,System.String)">
             <summary>
-            Verifies that all the entry fields are valied
+            Verifies that all the entry fields are valid
             </summary>
             <param name="clue"></param>
             <param name="answer"></param>
@@ -107,9 +107,10 @@
             </summary>
         </member>
         <member name="T:Lab2Solution.MauiProgram">
-            Name: XEE LO
-            Date: OCTOBER 6, 2022
-            Description: CS 341 SOFTWARE ENGINEERING: LAB 3
+            Name: Paul Hwang
+            Date: October 7th, 2022
+            Description: Lab 3 - Building upon our Lab 2 and having the database be an actual running database
+            					 on bit.io. I use an API key to write and fetch data to/from the database.
             Bugs: 
             Reflection: 
         </member>
