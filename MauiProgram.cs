@@ -1,12 +1,14 @@
 ﻿namespace Lab2Solution;
 
 /**
-Name: XEE LO
-Date: OCTOBER 6, 2022
-Description: CS 341 SOFTWARE ENGINEERING: LAB 3
+Name: Paul Hwang
+Date: October 7th, 2022
+Description: Lab 3 - Building upon our Lab 2 and having the database be an actual running database
+					 on bit.io. I use an API key to write and fetch data to/from the database.
 Bugs: 
 Reflection: 
 */
+
 public static class MauiProgram
 {
     public static IBusinessLogic ibl = new BusinessLogic();

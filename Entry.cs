@@ -11,7 +11,7 @@ namespace Lab2Solution
         String answer;
         int difficulty;
         String date;
-        int id; 
+        int id;         // TODO: delete entry from entry object?
 
         public String Clue
         {

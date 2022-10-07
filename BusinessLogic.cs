@@ -11,14 +11,15 @@ namespace Lab2Solution
     public class BusinessLogic : IBusinessLogic
     {
         const int MAX_CLUE_LENGTH = 250;
-        const int MAX_ANSWER_LENGTH = 21;
+        const int MAX_ANSWER_LENGTH = 25;
         const int MAX_DIFFICULTY = 2;
-        int latestId = 0;
+        int latestId = 0;       // TODO: do we need this? doesn't the bit.io database just increment for me?
 
         IDatabase db;                     // the actual database that does the hardwork
 
         public BusinessLogic()
         {
+            // TODO: change this to be Relational
             db = new FlatFileDatabase(); // new RelationalDatabase();           // 
         }
 
@@ -49,19 +50,18 @@ namespace Lab2Solution
 
         private InvalidFieldError CheckEntryFields(string clue, string answer, int difficulty, string date)
         {
-            if (clue.Length < 1 || clue.Length > MAX_CLUE_LENGTH)
+            if (clue == null || clue.Length < 1 || clue.Length > MAX_CLUE_LENGTH)
             {
                 return InvalidFieldError.InvalidClueLength;
             }
-            if (answer.Length < 1 || answer.Length > MAX_ANSWER_LENGTH)
+            if (answer == null || answer.Length < 1 || answer.Length > MAX_ANSWER_LENGTH)
             {
                 return InvalidFieldError.InvalidAnswerLength;
             }
-            if (difficulty < 0 || difficulty > MAX_DIFFICULTY)
+            if (difficulty < 1 || difficulty > MAX_DIFFICULTY)
             {
                 return InvalidFieldError.InvalidDifficulty;
             }
-
             return InvalidFieldError.NoError;
         }
 
@@ -82,7 +82,7 @@ namespace Lab2Solution
             {
                 return result;
             }
-            Entry entry = new Entry(clue, answer, difficulty, date, ++latestId);
+            Entry entry = new Entry(clue, answer, difficulty, date, ++latestId);    // TODO: delete the id from entry?
             db.AddEntry(entry);
 
             return InvalidFieldError.NoError;
@@ -150,6 +150,4 @@ namespace Lab2Solution
             return EntryEditError.NoError;
         }
     }
-
-
 }

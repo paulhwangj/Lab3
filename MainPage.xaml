@@ -68,8 +68,8 @@
                 <Button Text="Sort by Answer" Background ="LightBlue" Margin="10"  BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="SortByAnswer"/>
             </HorizontalStackLayout>
             </VerticalStackLayout>
-            <!--Form-->
             
+            <!--Form-->
             <Border Stroke="Black" StrokeThickness="8" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Padding="20">
                 <VerticalStackLayout VerticalOptions="Center">
                     <HorizontalStackLayout Margin="20" VerticalOptions="StartAndExpand" HorizontalOptions="Start" Spacing="10">

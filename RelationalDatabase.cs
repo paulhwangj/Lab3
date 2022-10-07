@@ -18,9 +18,8 @@ namespace Lab2Solution
     /// </summary>
     public class RelationalDatabase : IDatabase
     {
-
-
         String connectionString;
+        // TODO: consider the below
         /// <summary>
         /// A local version of the database, we *might* want to keep this in the code and merely
         /// adjust it whenever Add(), Delete() or Edit() is called
@@ -38,8 +37,21 @@ namespace Lab2Solution
         /// </summary>
         public RelationalDatabase()
         {
-
             connectionString = InitializeConnectionString();
+        }
+
+        /// <summary>
+        /// Creates the connection string to be utilized throughout the program
+        /// </summary>
+        public String InitializeConnectionString()
+        {
+            var bitHost = "db.bit.io";
+            var bitApiKey = "v2_3ueS6_yPsHdC3i6T4tYGqG5mWgjnY";
+
+            var bitUser = "paulhwangj";
+            var bitDbName = "paulhwangj/lab3";
+
+            return connectionString = $"Host={bitHost};Username={bitUser};Password={bitApiKey};Database={bitDbName}";
         }
 
 
@@ -207,21 +219,6 @@ namespace Lab2Solution
 
 
             return entries;
-        }
-
-        /// <summary>
-        /// Creates the connection string to be utilized throughout the program
-        /// 
-        /// </summary>
-        public String InitializeConnectionString()
-        {
-            var bitHost = "db.bit.io";
-            var bitApiKey = "v2_3ueNx_pieD6yPBrLtmSGpikm5R4Nn"; // from the "Password" field of the "Connect" menu
-
-            var bitUser = "xeelo2000";
-            var bitDbName = "xeelo2000/lab3";
-
-            return connectionString = $"Host={bitHost};Username={bitUser};Password={bitApiKey};Database={bitDbName}";
         }
     }
 }

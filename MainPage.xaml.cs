@@ -29,7 +29,7 @@ namespace Lab2Solution
             }
             else
             {
-                DisplayAlert("Difficulty", $"Please enter a valid number", "OK");
+                DisplayAlert("Error with Add:", "Invalid Difficulty (0-2)", "OK");
             }
         }
 
@@ -47,22 +47,26 @@ namespace Lab2Solution
         {
 
             Entry selectedEntry = EntriesLV.SelectedItem as Entry;
-            selectedEntry.Clue = clueENT.Text;
-            selectedEntry.Answer = answerENT.Text;
-            selectedEntry.Date = dateENT.Text;
+            // TODO: delete these?
+            // selectedEntry.Clue = clueENT.Text;
+            // selectedEntry.Answer = answerENT.Text;
+            // selectedEntry.Date = dateENT.Text;
 
 
             int difficulty;
             bool validDifficulty = int.TryParse(difficultyENT.Text, out difficulty);
             if (validDifficulty)
             {
-                selectedEntry.Difficulty = difficulty;
-                Console.WriteLine($"Difficuilt is {selectedEntry.Difficulty}");
-                EntryEditError entryEditError = MauiProgram.ibl.EditEntry(selectedEntry.Clue, selectedEntry.Answer, difficulty, selectedEntry.Date, selectedEntry.Id);
+                // EntryEditError entryEditError = MauiProgram.ibl.EditEntry(selectedEntry.Clue, selectedEntry.Answer, difficulty, selectedEntry.Date, selectedEntry.Id);
+                var entryEditError = MauiProgram.ibl.EditEntry(clueENT.Text, answerENT.Text, difficulty, dateENT.Text, selectedEntry.Id);
                 if(entryEditError != EntryEditError.NoError)
                 {
-                    DisplayAlert("An error has occurred while editing an entry", $"{entryEditError}", "OK");
+                    DisplayAlert("Error with Edit:", entryEditError.ToString(), "OK");
                 }
+            }
+            else
+            {
+                DisplayAlert("Error with Edit:", "Invalid Difficulty (0-2)", "OK");
             }
         }
 
@@ -76,6 +80,7 @@ namespace Lab2Solution
 
         }
 
+        // TODO: implement below
         void SortByClue(System.Object sender, System.EventArgs e)
         {
 
