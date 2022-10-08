@@ -166,12 +166,12 @@ namespace Lab2Solution
         // TODO: implement sorting
         public void SortByClue()
         {
-            
+            db.SortByClue();
         }
 
         public void SortByAnswer()
         {
-
+            db.SortByAnswer();
         }
     }
 }

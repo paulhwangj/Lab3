@@ -11,5 +11,7 @@ namespace Lab2Solution
         ObservableCollection<Entry> GetEntries();
         bool EditEntry(Entry replacementEntry);
         int GetNextId();
+        void SortByClue();
+        void SortByAnswer();
     }
 }

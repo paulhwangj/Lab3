@@ -213,6 +213,56 @@ namespace Lab2Solution
         }
 
         /// <summary>
+        /// Sorts the entries by the clue (ascending alphabetical)
+        /// </summary>
+        public void SortByClue()
+        {
+            // Removes all the entries
+            while (entries.Count > 0)
+            {
+                entries.RemoveAt(0);
+            }
+            
+            using var con = new NpgsqlConnection(connectionString);
+            con.Open();
+
+            var sql = "SELECT * FROM entries ORDER BY clue"; // returns relation with it ordered by answer in ascending
+            using var cmd = new NpgsqlCommand(sql, con);
+
+            using NpgsqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                entries.Add(new Entry(reader[0] as String, reader[1] as String, (int)reader[2], reader[3] as String, (int)reader[4]));
+            }
+            con.Close();
+        }
+
+        /// <summary>
+        /// Sorts the entries by the answer (ascending alphabetical)
+        /// </summary>
+        public void SortByAnswer()
+        {
+            // Removes all the entries
+            while (entries.Count > 0)
+            {
+                entries.RemoveAt(0);
+            }
+
+            using var con = new NpgsqlConnection(connectionString);
+            con.Open();
+
+            var sql = "SELECT * FROM entries ORDER BY answer"; // returns relation with it ordered by answer in ascending
+            using var cmd = new NpgsqlCommand(sql, con);
+
+            using NpgsqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                entries.Add(new Entry(reader[0] as String, reader[1] as String, (int)reader[2], reader[3] as String, (int)reader[4]));
+            }
+            con.Close();
+        }
+
+        /// <summary>
         /// Ran only once at program start up, it retrieves the next available Id by
         /// finding the max id + 1 within the database and returns it
         /// </summary>
