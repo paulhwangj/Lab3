@@ -13,19 +13,19 @@ namespace Lab2Solution
         const int MAX_CLUE_LENGTH = 250;
         const int MAX_ANSWER_LENGTH = 25;
         const int MAX_DIFFICULTY = 2;
-        int latestId = 0;       // TODO: do we need this? doesn't the bit.io database just increment for me?
+        int latestId = 0;
 
         IDatabase db;                     // the actual database that does the hardwork
 
         public BusinessLogic()
         {
-            // db = new FlatFileDatabase();
             db = new RelationalDatabase();
+            GetNextId();
         }
 
 
         /// <summary>
-        /// Represents all entries
+        /// Returns the entries that have all the entries in the DB populated in it
         /// This also could have been a property
         /// </summary>
         /// <returns>ObservableCollection of entrties</returns>
@@ -61,6 +61,10 @@ namespace Lab2Solution
             if (difficulty < 1 || difficulty > MAX_DIFFICULTY)
             {
                 return InvalidFieldError.InvalidDifficulty;
+            }
+            if (date == null || date.Length < 1 || date.Length > 11)
+            {
+                return InvalidFieldError.InvalidDate;
             }
             return InvalidFieldError.NoError;
         }
@@ -141,6 +145,7 @@ namespace Lab2Solution
             entry.Difficulty = difficulty;
             entry.Date = date;
 
+            // TODO: test that this works by entering in an invalid date (since date isn't checked in businesslogic)
             bool success = db.EditEntry(entry);
             if (!success)
             {
@@ -148,6 +153,14 @@ namespace Lab2Solution
             }
 
             return EntryEditError.NoError;
+        }
+
+        /// <summary>
+        /// Ran only once at program start up, it retrieves the next available Id by
+        /// finding the max id + 1 within the database and sets latestId to that number
+        /// </summary>
+        public void GetNextId() {
+            latestId = db.GetNextId();
         }
     }
 }

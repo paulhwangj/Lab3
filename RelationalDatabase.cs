@@ -69,7 +69,7 @@ namespace Lab2Solution
                 // write the SQL to INSERT entry into bit.io
                 using var con = new NpgsqlConnection(connectionString);
                 con.Open();
-                var sql = "INSERT INTO entries (id, clue, answer, difficutly, date) VALUES(@id, @clue, @answer, @difficulty, @date)";
+                var sql = "INSERT INTO entries (clue, answer, difficutly, date, id) VALUES(@id, @clue, @answer, @difficulty, @date, @id)";
                 using var cmd = new NpgsqlCommand(sql, con);
                 // replaces the @var_name with their value
                 cmd.Parameters.AddWithValue("id", entry.Id);
@@ -158,7 +158,7 @@ namespace Lab2Solution
                         //NEED TO FIX THIS AND NEED TO DO SORT BY CLUE AND ANSWER!!!!
                         using var con = new NpgsqlConnection(connectionString);
                         con.Open();
-                        var sql = "INSERT INTO entries (id, clue, answer, difficutly, date) VALUES(@id, @clue, @answer, @difficulty, @date)";
+                        var sql = "INSERT INTO entries (clue, answer, difficutly, date, id) VALUES(@clue, @answer, @difficulty, @date, @id)";
                         using var cmd = new NpgsqlCommand(sql, con);
                         cmd.Parameters.AddWithValue("id", entry.Id);
                         cmd.Parameters.AddWithValue("clue", entry.Clue);
@@ -215,6 +215,22 @@ namespace Lab2Solution
             }
             con.Close();
             return entries;
+        }
+
+        /// <summary>
+        /// Ran only once at program start up, it retrieves the next available Id by
+        /// finding the max id + 1 within the database and returns it
+        /// </summary>
+        /// <returns>the next available id (int)</returns>
+        public int GetNextId() {
+            int id; 
+            using var con = new NpgsqlConnection(connectionString);
+            con.Open();
+            var sql = "SELECT MAX(id) FROM entries;"; // returns the largest id in the table
+            using var cmd = new NpgsqlCommand(sql, con);
+            id = (Int32)cmd.ExecuteScalar();    // assigns the largest id in the table to id
+            con.Close();
+            return id + 1;
         }
     }
 }
