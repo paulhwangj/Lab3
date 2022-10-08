@@ -45,20 +45,13 @@ namespace Lab2Solution
 
         void EditEntry(System.Object sender, System.EventArgs e)
         {
-
+            // TODO: i think this is why it's crashing when nothing is selected, how did Xee and I do it on our lab 2?
             Entry selectedEntry = EntriesLV.SelectedItem as Entry;
-            // TODO: delete these?
-            selectedEntry.Clue = clueENT.Text;
-            selectedEntry.Answer = answerENT.Text;
-            selectedEntry.Date = dateENT.Text;
-
 
             int difficulty;
             bool validDifficulty = int.TryParse(difficultyENT.Text, out difficulty);
             if (validDifficulty)
             {
-                // TODO: delete below?
-                // EntryEditError entryEditError = MauiProgram.ibl.EditEntry(selectedEntry.Clue, selectedEntry.Answer, difficulty, selectedEntry.Date, selectedEntry.Id);
                 var entryEditError = MauiProgram.ibl.EditEntry(clueENT.Text, answerENT.Text, difficulty, dateENT.Text, selectedEntry.Id);
                 if(entryEditError != EntryEditError.NoError)
                 {

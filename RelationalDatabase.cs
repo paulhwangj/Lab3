@@ -140,13 +140,13 @@ namespace Lab2Solution
         /// <summary>
         /// Edits an entry
         /// </summary>
-        /// <param name="replacementEntry"></param>
+        /// <param name="modifiedEntry">Entry containing updated information but same id</param>
         /// <returns>true if editing was successful</returns>
-        public bool EditEntry(Entry replacementEntry)
+        public bool EditEntry(Entry modifiedEntry)
         {
             foreach (Entry entry in entries) // iterate through entries until we find the Entry in question
             {
-                if (entry.Id == replacementEntry.Id) // found it
+                if (entry.Id == modifiedEntry.Id) // found it
                 {
                     try
                     {
@@ -154,20 +154,20 @@ namespace Lab2Solution
                         con.Open();
                         var sql = "UPDATE entries SET clue = @clue, answer = @answer, difficulty = @difficulty, date = @date WHERE id = @id";
                         using var cmd = new NpgsqlCommand(sql, con);
-                        cmd.Parameters.AddWithValue("clue", entry.Clue);
-                        cmd.Parameters.AddWithValue("answer", entry.Answer);
-                        cmd.Parameters.AddWithValue("difficulty", entry.Difficulty);
-                        cmd.Parameters.AddWithValue("date", entry.Date);
-                        cmd.Parameters.AddWithValue("id", entry.Id);
+                        cmd.Parameters.AddWithValue("clue", modifiedEntry.Clue);
+                        cmd.Parameters.AddWithValue("answer", modifiedEntry.Answer);
+                        cmd.Parameters.AddWithValue("difficulty", modifiedEntry.Difficulty);
+                        cmd.Parameters.AddWithValue("date", modifiedEntry.Date);
+                        cmd.Parameters.AddWithValue("id", modifiedEntry.Id);
                         int numRowsAffected = cmd.ExecuteNonQuery();
                         Console.WriteLine($"The # of rows inserted was {numRowsAffected}");
                         con.Close();
 
-                        // entry was added to db, let's have change reflected for the entry in entries
-                        entry.Answer = replacementEntry.Answer;
-                        entry.Clue = replacementEntry.Clue;
-                        entry.Difficulty = replacementEntry.Difficulty;
-                        entry.Date = replacementEntry.Date;   
+                        // modify entry in entries after it's been added to db
+                        entry.Clue = modifiedEntry.Clue;
+                        entry.Answer = modifiedEntry.Answer;
+                        entry.Difficulty = modifiedEntry.Difficulty;
+                        entry.Date = modifiedEntry.Date;
                         
                         return true;
                     }
@@ -175,7 +175,6 @@ namespace Lab2Solution
                     {
                         Console.WriteLine("Error while replacing entry: {0}", ioe);
                     }
-
                 }
             }
             return false;

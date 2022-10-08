@@ -58,7 +58,7 @@ namespace Lab2Solution
             {
                 return InvalidFieldError.InvalidAnswerLength;
             }
-            if (difficulty < 1 || difficulty > MAX_DIFFICULTY)
+            if (difficulty < 0 || difficulty > MAX_DIFFICULTY)
             {
                 return InvalidFieldError.InvalidDifficulty;
             }
@@ -134,7 +134,6 @@ namespace Lab2Solution
         /// <returns>an error if there is one, EntryEditError.None otherwise</returns>
         public EntryEditError EditEntry(string clue, string answer, int difficulty, string date, int id)
         {
-
             var fieldCheck = CheckEntryFields(clue, answer, difficulty, date);
             if (fieldCheck != InvalidFieldError.NoError)
             {
@@ -144,7 +143,7 @@ namespace Lab2Solution
             var entry = db.FindEntry(id);
             if (entry != null) // entry was found in entries
             {
-                bool success = db.EditEntry(entry);
+                bool success = db.EditEntry(new Entry(clue, answer, difficulty, date, id));
                 if (!success)
                 {
                     return EntryEditError.DBEditError;
@@ -155,11 +154,6 @@ namespace Lab2Solution
             {
                 return EntryEditError.EntryNotFound;
             }
-            // TODO: remove, this should be down in the db
-            // entry.Clue = clue;
-            // entry.Answer = answer;
-            // entry.Difficulty = difficulty;
-            // entry.Date = date;
         }
 
         /// <summary>
