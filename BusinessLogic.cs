@@ -104,7 +104,7 @@ namespace Lab2Solution
 
             var entry = db.FindEntry(entryId);
 
-            if (entry != null)
+            if (entry != null) // entry was found in entries
             {
                 bool success = db.DeleteEntry(entry);
                 if (success)
@@ -117,7 +117,7 @@ namespace Lab2Solution
                     return EntryDeletionError.DBDeletionError;
                 }
             }
-            else
+            else // entries was not found in entries
             {
                 return EntryDeletionError.EntryNotFound;
             }
@@ -142,18 +142,24 @@ namespace Lab2Solution
             }
 
             var entry = db.FindEntry(id);
-            entry.Clue = clue;
-            entry.Answer = answer;
-            entry.Difficulty = difficulty;
-            entry.Date = date;
-
-            bool success = db.EditEntry(entry);
-            if (!success)
+            if (entry != null) // entry was found in entries
             {
-                return EntryEditError.DBEditError;
+                bool success = db.EditEntry(entry);
+                if (!success)
+                {
+                    return EntryEditError.DBEditError;
+                }
+                return EntryEditError.NoError;
             }
-
-            return EntryEditError.NoError;
+            else    // entry was not found in entries
+            {
+                return EntryEditError.EntryNotFound;
+            }
+            // TODO: remove, this should be down in the db
+            // entry.Clue = clue;
+            // entry.Answer = answer;
+            // entry.Difficulty = difficulty;
+            // entry.Date = date;
         }
 
         /// <summary>
