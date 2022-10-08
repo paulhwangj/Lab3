@@ -80,13 +80,15 @@ namespace Lab2Solution
         /// <returns>an error if there is an error, InvalidFieldError.None otherwise</returns>
         public InvalidFieldError AddEntry(string clue, string answer, int difficulty, string date)
         {
-
+            // verifies that the entry has valid field params
             var result = CheckEntryFields(clue, answer, difficulty, date);
             if (result != InvalidFieldError.NoError)
             {
                 return result;
             }
-            Entry entry = new Entry(clue, answer, difficulty, date, ++latestId);    // TODO: delete the id from entry?
+            
+            // fields have been verified, create the entry and let's add it to the database
+            Entry entry = new Entry(clue, answer, difficulty, date, latestId++);
             db.AddEntry(entry);
 
             return InvalidFieldError.NoError;
@@ -145,7 +147,6 @@ namespace Lab2Solution
             entry.Difficulty = difficulty;
             entry.Date = date;
 
-            // TODO: test that this works by entering in an invalid date (since date isn't checked in businesslogic)
             bool success = db.EditEntry(entry);
             if (!success)
             {

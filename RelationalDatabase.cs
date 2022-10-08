@@ -63,24 +63,24 @@ namespace Lab2Solution
         {
             try
             {
-                entry.Id = entries.Count + 1;
-                entries.Add(entry);
-
-                // write the SQL to INSERT entry into bit.io
                 using var con = new NpgsqlConnection(connectionString);
                 con.Open();
-                var sql = "INSERT INTO entries (clue, answer, difficutly, date, id) VALUES(@id, @clue, @answer, @difficulty, @date, @id)";
+                var sql = "INSERT INTO entries (clue, answer, difficutly, date, id) VALUES(@clue, @answer, @difficulty, @date, @id)";
                 using var cmd = new NpgsqlCommand(sql, con);
                 // replaces the @var_name with their value
-                cmd.Parameters.AddWithValue("id", entry.Id);
                 cmd.Parameters.AddWithValue("clue", entry.Clue);
                 cmd.Parameters.AddWithValue("answer", entry.Answer);
                 cmd.Parameters.AddWithValue("difficulty", entry.Difficulty);
                 cmd.Parameters.AddWithValue("date", entry.Date);
+                cmd.Parameters.AddWithValue("id", entry.Id);
+
                 int numRowsAffected = cmd.ExecuteNonQuery();
                 Console.WriteLine($"The # of rows inserted was {numRowsAffected}");
+
                 con.Close();
 
+                // database successfully added the entry, now let's add it to entries
+                entries.Add(entry);
             }
             catch (IOException ioe)
             {
@@ -90,7 +90,7 @@ namespace Lab2Solution
 
 
         /// <summary>
-        /// Finds a specific entry
+        /// Finds a specific entry for 
         /// </summary>
         /// <param name="id">id to find</param>
         /// <returns>the Entry (if available)</returns>
@@ -106,6 +106,7 @@ namespace Lab2Solution
             return null;
         }
 
+        // TODO: add param into method doc
         /// <summary>
         /// Deletes an entry 
         /// </summary>
@@ -117,11 +118,10 @@ namespace Lab2Solution
             {
                 var result = entries.Remove(entry);
 
-
                 using var con = new NpgsqlConnection(connectionString);
                 con.Open();
                 var sql = "DELETE FROM entries WHERE id = @id"; // don't hardcode,  
-                                                                  // and don't use unsanitized user input, instead ... 
+                                                                // and don't use unsanitized user input, instead ... 
                 using var cmd = new NpgsqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("id", entry.Id);
                 int numRowsAffected = cmd.ExecuteNonQuery();
@@ -148,27 +148,27 @@ namespace Lab2Solution
             {
                 if (entry.Id == replacementEntry.Id) // found it
                 {
-                    entry.Answer = replacementEntry.Answer;
-                    entry.Clue = replacementEntry.Clue;
-                    entry.Difficulty = replacementEntry.Difficulty;
-                    entry.Date = replacementEntry.Date;
-
                     try
                     {
-                        //NEED TO FIX THIS AND NEED TO DO SORT BY CLUE AND ANSWER!!!!
                         using var con = new NpgsqlConnection(connectionString);
                         con.Open();
-                        var sql = "INSERT INTO entries (clue, answer, difficutly, date, id) VALUES(@clue, @answer, @difficulty, @date, @id)";
+                        var sql = "UPDATE entries SET clue = @clue, answer = @answer, difficulty = @difficulty, date = @date WHERE id = @id";
                         using var cmd = new NpgsqlCommand(sql, con);
-                        cmd.Parameters.AddWithValue("id", entry.Id);
                         cmd.Parameters.AddWithValue("clue", entry.Clue);
                         cmd.Parameters.AddWithValue("answer", entry.Answer);
                         cmd.Parameters.AddWithValue("difficulty", entry.Difficulty);
                         cmd.Parameters.AddWithValue("date", entry.Date);
+                        cmd.Parameters.AddWithValue("id", entry.Id);
                         int numRowsAffected = cmd.ExecuteNonQuery();
                         Console.WriteLine($"The # of rows inserted was {numRowsAffected}");
-                        con.Close(); // write the SQL to UPDATE the entry. Again, you have its id, which should be all you need.
+                        con.Close();
 
+                        // entry was added to db, let's have change reflected for the entry in entries
+                        entry.Answer = replacementEntry.Answer;
+                        entry.Clue = replacementEntry.Clue;
+                        entry.Difficulty = replacementEntry.Difficulty;
+                        entry.Date = replacementEntry.Date;   
+                        
                         return true;
                     }
                     catch (IOException ioe)
