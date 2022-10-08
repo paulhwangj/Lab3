@@ -73,21 +73,16 @@ namespace Lab2Solution
             dateENT.Text = selectedEntry.Date;
 
         }
-
-        // TODO: implement below
+        
         void SortByClue(System.Object sender, System.EventArgs e)
         {
-
+            MauiProgram.ibl.SortByClue();
         }
 
         void SortByAnswer(System.Object sender, System.EventArgs e)
         {
-
+            MauiProgram.ibl.SortByAnswer();
         }
-
-
-
-
     }
 }
 

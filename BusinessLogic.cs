@@ -162,5 +162,16 @@ namespace Lab2Solution
         public void GetNextId() {
             latestId = db.GetNextId();
         }
+
+        // TODO: implement sorting
+        public void SortByClue()
+        {
+            
+        }
+
+        public void SortByAnswer()
+        {
+
+        }
     }
 }

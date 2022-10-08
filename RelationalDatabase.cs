@@ -65,7 +65,7 @@ namespace Lab2Solution
             {
                 using var con = new NpgsqlConnection(connectionString);
                 con.Open();
-                var sql = "INSERT INTO entries (clue, answer, difficutly, date, id) VALUES(@clue, @answer, @difficulty, @date, @id)";
+                var sql = "INSERT INTO entries (clue, answer, difficulty, date, id) VALUES(@clue, @answer, @difficulty, @date, @id)";
                 using var cmd = new NpgsqlCommand(sql, con);
                 cmd.Parameters.AddWithValue("clue", entry.Clue);
                 cmd.Parameters.AddWithValue("answer", entry.Answer);
@@ -225,7 +225,7 @@ namespace Lab2Solution
             using var cmd = new NpgsqlCommand(sql, con);
             id = (Int32)cmd.ExecuteScalar();    // assigns the largest id in the table to id
             con.Close();
-            return id + 1;
+            return id;
         }
     }
 }
