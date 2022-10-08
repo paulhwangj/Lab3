@@ -102,12 +102,11 @@ namespace Lab2Solution
             return null;
         }
 
-        // TODO: add param into method doc
         /// <summary>
         /// Deletes an entry 
         /// </summary>
-        /// 
         /// <param name="entry">An entry, which is presumed to exist</param>
+        /// <returns>a bool that says if deletion was successful or not</returns>
         public bool DeleteEntry(Entry entry)
         {
             try
@@ -182,33 +181,7 @@ namespace Lab2Solution
         /// <returns>all of the entries</returns>
         public ObservableCollection<Entry> GetEntries()
         {
-            // removes any existing entries before populating
-            while (entries.Count > 0)
-            {
-                entries.RemoveAt(0);
-            }
-
-            using var con = new NpgsqlConnection(connectionString);
-            con.Open();
-
-            var sql = "SELECT * FROM entries;";
-
-            using var cmd = new NpgsqlCommand(sql, con);
-
-            using NpgsqlDataReader reader = cmd.ExecuteReader();
-
-            // Columns are clue, answer, difficulty, date, id in that order ...
-            // Displays all rows and populates entries
-            while (reader.Read())
-            {
-                for (int colNum = 0; colNum < reader.FieldCount; colNum++)
-                {
-                    Console.Write(reader.GetName(colNum) + "=" + reader[colNum] + " ");
-                }
-                Console.Write("\n");
-                entries.Add(new Entry(reader[0] as String, reader[1] as String, (int)reader[2], reader[3] as String, (int)reader[4]));
-            }
-            con.Close();
+            PopulateEntries("none");
             return entries;
         }
 
@@ -217,24 +190,7 @@ namespace Lab2Solution
         /// </summary>
         public void SortByClue()
         {
-            // Removes all the entries
-            while (entries.Count > 0)
-            {
-                entries.RemoveAt(0);
-            }
-            
-            using var con = new NpgsqlConnection(connectionString);
-            con.Open();
-
-            var sql = "SELECT * FROM entries ORDER BY clue"; // returns relation with it ordered by answer in ascending
-            using var cmd = new NpgsqlCommand(sql, con);
-
-            using NpgsqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                entries.Add(new Entry(reader[0] as String, reader[1] as String, (int)reader[2], reader[3] as String, (int)reader[4]));
-            }
-            con.Close();
+            PopulateEntries("clue");
         }
 
         /// <summary>
@@ -242,21 +198,40 @@ namespace Lab2Solution
         /// </summary>
         public void SortByAnswer()
         {
-            // Removes all the entries
-            while (entries.Count > 0)
+            PopulateEntries("answer");
+        }
+
+        /// <summary>
+        /// Populates entries in the proper ordering that it needs to be in
+        /// </summary>
+        ///<param name="ordering">string representing how entries should be ordered</param>
+        public void PopulateEntries(string ordering)
+        {
+            string sql;
+            // sql statement depends on which method called it
+            if (ordering == "clue") // SortByClue()
             {
-                entries.RemoveAt(0);
+                sql = "SELECT * FROM entries ORDER BY clue";
+            }
+            else if (ordering == "answer") // SortByAnswer()
+            {
+                sql = "SELECT * FROM entries ORDER BY answer";
+            }
+            else // GetEntries(), order of entries doesn't matter
+            {
+                sql = "SELECT * FROM entries";
             }
 
+            // clear entries, ordering of entries is going to change
+            entries.Clear();
+            
             using var con = new NpgsqlConnection(connectionString);
             con.Open();
-
-            var sql = "SELECT * FROM entries ORDER BY answer"; // returns relation with it ordered by answer in ascending
             using var cmd = new NpgsqlCommand(sql, con);
-
             using NpgsqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
+                // populates accordingly
                 entries.Add(new Entry(reader[0] as String, reader[1] as String, (int)reader[2], reader[3] as String, (int)reader[4]));
             }
             con.Close();

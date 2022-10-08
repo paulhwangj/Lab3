@@ -1,5 +1,4 @@
-﻿
-namespace Lab2Solution
+﻿namespace Lab2Solution
 {
 
     public partial class MainPage : ContentPage
@@ -73,7 +72,6 @@ namespace Lab2Solution
             dateENT.Text = selectedEntry.Date;
 
         }
-        
         void SortByClue(System.Object sender, System.EventArgs e)
         {
             MauiProgram.ibl.SortByClue();
