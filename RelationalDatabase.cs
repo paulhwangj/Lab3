@@ -67,20 +67,16 @@ namespace Lab2Solution
                 con.Open();
                 var sql = "INSERT INTO entries (clue, answer, difficutly, date, id) VALUES(@clue, @answer, @difficulty, @date, @id)";
                 using var cmd = new NpgsqlCommand(sql, con);
-                // replaces the @var_name with their value
                 cmd.Parameters.AddWithValue("clue", entry.Clue);
                 cmd.Parameters.AddWithValue("answer", entry.Answer);
                 cmd.Parameters.AddWithValue("difficulty", entry.Difficulty);
                 cmd.Parameters.AddWithValue("date", entry.Date);
                 cmd.Parameters.AddWithValue("id", entry.Id);
-
                 int numRowsAffected = cmd.ExecuteNonQuery();
                 Console.WriteLine($"The # of rows inserted was {numRowsAffected}");
-
                 con.Close();
 
-                // database successfully added the entry, now let's add it to entries
-                entries.Add(entry);
+                entries.Add(entry); // database successfully added the entry, now let's add it to entries
             }
             catch (IOException ioe)
             {

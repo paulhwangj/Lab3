@@ -88,8 +88,7 @@ namespace Lab2Solution
             }
             
             // fields have been verified, create the entry and let's add it to the database
-            Entry entry = new Entry(clue, answer, difficulty, date, latestId++);
-            db.AddEntry(entry);
+            db.AddEntry(new Entry(clue, answer, difficulty, date, latestId++));
 
             return InvalidFieldError.NoError;
         }
