@@ -23,17 +23,19 @@ namespace Lab2Solution
             GetNextId();
         }
 
-
         /// <summary>
         /// Returns the entries that have all the entries in the DB populated in it
-        /// This also could have been a property
         /// </summary>
-        /// <returns>ObservableCollection of entrties</returns>
+        /// <returns>ObservableCollection of entries</returns>
         public ObservableCollection<Entry> GetEntries()
         {
             return db.GetEntries();
         }
 
+        /// <summary>
+        /// Finds specific entry in the entries
+        /// </summary>
+        /// <returns>the entry (if it exists, null otherwise)</returns>
         public Entry FindEntry(int id)
         {
             return db.FindEntry(id);
@@ -42,12 +44,11 @@ namespace Lab2Solution
         /// <summary>
         /// Verifies that all the entry fields are valid
         /// </summary>
-        /// <param name="clue"></param>
-        /// <param name="answer"></param>
-        /// <param name="difficulty"></param>
-        /// <param name="date"></param>
-        /// <returns>an error if there is an error, InvalidFieldError.None otherwise</returns>
-
+        /// <param name="clue">clue to be checked</param>
+        /// <param name="answer">answer to be checked</param>
+        /// <param name="difficulty">difficulty to be checked</param>
+        /// <param name="date">date to be checked</param>
+        /// <returns>corresponding error in InvalidFieldError, InvalidFieldError.NoError otherwise</returns>
         private InvalidFieldError CheckEntryFields(string clue, string answer, int difficulty, string date)
         {
             if (clue == null || clue.Length < 1 || clue.Length > MAX_CLUE_LENGTH)
@@ -73,11 +74,11 @@ namespace Lab2Solution
         /// <summary>
         /// Adds an entry
         /// </summary>
-        /// <param name="clue"></param>
-        /// <param name="answer"></param>
-        /// <param name="difficulty"></param>
-        /// <param name="date"></param>
-        /// <returns>an error if there is an error, InvalidFieldError.None otherwise</returns>
+        /// <param name="clue">clue of new entry</param>
+        /// <param name="answer">answer of new entry</param>
+        /// <param name="difficulty">difficulty of new entry</param>
+        /// <param name="date">date of new entry</param>
+        /// <returns>corresponding error in InvalidFieldError, InvalidFieldError.NoError otherwise</returns>
         public InvalidFieldError AddEntry(string clue, string answer, int difficulty, string date)
         {
             // verifies that the entry has valid field params
@@ -96,11 +97,10 @@ namespace Lab2Solution
         /// <summary>
         /// Deletes an entry
         /// </summary>
-        /// <param name="entryId"></param>
-        /// <returns>an erreor if there is one, EntryDeletionError.NoError otherwise</returns>
+        /// <param name="entryId">id of entry to be deleted</param>
+        /// <returns>corresponding error if there is one, EntryDeletionError.NoError otherwise</returns>
         public EntryDeletionError DeleteEntry(int entryId)
         {
-
             var entry = db.FindEntry(entryId);
 
             if (entry != null) // entry was found in entries
@@ -125,12 +125,12 @@ namespace Lab2Solution
         /// <summary>
         /// Edits an Entry
         /// </summary>
-        /// <param name="clue"></param>
-        /// <param name="answer"></param>
-        /// <param name="difficulty"></param>
-        /// <param name="date"></param>
-        /// <param name="id"></param>
-        /// <returns>an error if there is one, EntryEditError.None otherwise</returns>
+        /// <param name="clue">new clue for existing entry</param>
+        /// <param name="answer">new answer for existing entry</param>
+        /// <param name="difficulty">new difficulty for existing entry</param>
+        /// <param name="date">new date for existing entry</param>
+        /// <param name="id">id for existing entry</param>
+        /// <returns>an error if there is one, EntryEditError.NoError otherwise</returns>
         public EntryEditError EditEntry(string clue, string answer, int difficulty, string date, int id)
         {
             var fieldCheck = CheckEntryFields(clue, answer, difficulty, date);
@@ -156,19 +156,24 @@ namespace Lab2Solution
         }
 
         /// <summary>
-        /// Ran only once at program start up, it retrieves the next available Id by
-        /// finding the max id + 1 within the database and sets latestId to that number
+        /// Ran only once at program start up, it retrieves the next available id by
+        /// finding the max id within the database and sets latestId to that number
         /// </summary>
         public void GetNextId() {
             latestId = db.GetNextId();
         }
 
-        // TODO: implement sorting
+        /// <summary>
+        /// Sorts the entries by clue
+        /// </summary>
         public void SortByClue()
         {
             db.SortByClue();
         }
 
+        /// <summary>
+        /// Sorts the entries by answer
+        /// </summary>
         public void SortByAnswer()
         {
             db.SortByAnswer();

@@ -12,28 +12,16 @@ using Npgsql;
 
 namespace Lab2Solution
 {
-
-    /// <summary>
-    /// This is the database class, currently a FlatFileDatabase
-    /// </summary>
     public class RelationalDatabase : IDatabase
     {
         String connectionString;
-        // TODO: consider the below
-        /// <summary>
-        /// A local version of the database, we *might* want to keep this in the code and merely
-        /// adjust it whenever Add(), Delete() or Edit() is called
-        /// Alternatively, we could delete this, meaning we will reach out to bit.io for everything
-        /// What are the costs of that?
-        /// There are always tradeoffs in software engineering.
-        /// </summary>
         ObservableCollection<Entry> entries = new ObservableCollection<Entry>();
 
         JsonSerializerOptions options;
 
 
         /// <summary>
-        /// Here or thereabouts initialize a connectionString that will be used in all the SQL calls
+        /// Creates connection string to be used to connect to bit.io db
         /// </summary>
         public RelationalDatabase()
         {
@@ -86,10 +74,10 @@ namespace Lab2Solution
 
 
         /// <summary>
-        /// Finds a specific entry for 
+        /// Finds a specific entry
         /// </summary>
-        /// <param name="id">id to find</param>
-        /// <returns>the Entry (if available)</returns>
+        /// <param name="id">id of entry to find</param>
+        /// <returns>the Entry (if available, null otherwise)</returns>
         public Entry FindEntry(int id)
         {
             foreach (Entry entry in entries)
@@ -103,9 +91,9 @@ namespace Lab2Solution
         }
 
         /// <summary>
-        /// Deletes an entry 
+        /// Deletes an entry
         /// </summary>
-        /// <param name="entry">An entry, which is presumed to exist</param>
+        /// <param name="entry">An entry, which is verified to exist</param>
         /// <returns>a bool that says if deletion was successful or not</returns>
         public bool DeleteEntry(Entry entry)
         {
@@ -136,7 +124,7 @@ namespace Lab2Solution
         /// Edits an entry
         /// </summary>
         /// <param name="modifiedEntry">Entry containing updated information but same id</param>
-        /// <returns>true if editing was successful</returns>
+        /// <returns>true if editing was successful, false otherwise</returns>
         public bool EditEntry(Entry modifiedEntry)
         {
             foreach (Entry entry in entries) // iterate through entries until we find the Entry in question
@@ -176,9 +164,9 @@ namespace Lab2Solution
         }
 
         /// <summary>
-        /// Retrieves all the entries
+        /// Populates entries with entries in the db
         /// </summary>
-        /// <returns>all of the entries</returns>
+        /// <returns>ObservableCollection of <Entry> that will display on application</returns>
         public ObservableCollection<Entry> GetEntries()
         {
             PopulateEntries("none");
@@ -239,9 +227,9 @@ namespace Lab2Solution
 
         /// <summary>
         /// Ran only once at program start up, it retrieves the next available Id by
-        /// finding the max id + 1 within the database and returns it
+        /// finding the max id within the database and returns it
         /// </summary>
-        /// <returns>the next available id (int)</returns>
+        /// <returns>the max id (int)</returns>
         public int GetNextId() {
             int id; 
             using var con = new NpgsqlConnection(connectionString);
