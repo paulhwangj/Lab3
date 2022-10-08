@@ -46,7 +46,7 @@ namespace Lab2Solution
         public String InitializeConnectionString()
         {
             var bitHost = "db.bit.io";
-            var bitApiKey = "v2_3ueS6_yPsHdC3i6T4tYGqG5mWgjnY";
+            var bitApiKey = "v2_3uf2D_m8ksxvxbCX4iXqDbU9vL9Di";
 
             var bitUser = "paulhwangj";
             var bitDbName = "paulhwangj/lab3";
@@ -167,7 +167,7 @@ namespace Lab2Solution
                         cmd.Parameters.AddWithValue("date", entry.Date);
                         int numRowsAffected = cmd.ExecuteNonQuery();
                         Console.WriteLine($"The # of rows inserted was {numRowsAffected}");
-                        con.Close();/// write the SQL to UPDATE the entry. Again, you have its id, which should be all you need.
+                        con.Close(); // write the SQL to UPDATE the entry. Again, you have its id, which should be all you need.
 
                         return true;
                     }
@@ -187,7 +187,7 @@ namespace Lab2Solution
         /// <returns>all of the entries</returns>
         public ObservableCollection<Entry> GetEntries()
         {
-            // TODO: why is this happening instead of . .  Clear()
+            // removes any existing entries before populating
             while (entries.Count > 0)
             {
                 entries.RemoveAt(0);
@@ -196,14 +196,14 @@ namespace Lab2Solution
             using var con = new NpgsqlConnection(connectionString);
             con.Open();
 
-            var sql = "SELECT * FROM \"entries\";";
+            var sql = "SELECT * FROM entries;";
 
             using var cmd = new NpgsqlCommand(sql, con);
 
             using NpgsqlDataReader reader = cmd.ExecuteReader();
 
             // Columns are clue, answer, difficulty, date, id in that order ...
-            // Show all data
+            // Displays all rows and populates entries
             while (reader.Read())
             {
                 for (int colNum = 0; colNum < reader.FieldCount; colNum++)
