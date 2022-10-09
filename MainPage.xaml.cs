@@ -35,31 +35,43 @@
         void DeleteEntry(System.Object sender, System.EventArgs e)
         {
             Entry selectedEntry = EntriesLV.SelectedItem as Entry;
-            EntryDeletionError entryDeletionError = MauiProgram.ibl.DeleteEntry(selectedEntry.Id);
-            if(entryDeletionError != EntryDeletionError.NoError)
+            if(selectedEntry != null) // we will delete an entry as long as something was selected
             {
-                DisplayAlert("An error has occurred while deleting an entry", $"{entryDeletionError}", "OK");
+                EntryDeletionError entryDeletionError = MauiProgram.ibl.DeleteEntry(selectedEntry.Id);
+                if(entryDeletionError != EntryDeletionError.NoError)
+                {
+                    DisplayAlert("An error has occurred while deleting an entry", $"{entryDeletionError}", "OK");
+                }
+            }
+            else
+            {
+                DisplayAlert("Delete Entry Message:", "EntryNotFound", "Ok");
             }
         }
 
         void EditEntry(System.Object sender, System.EventArgs e)
         {
-            // TODO: i think this is why it's crashing when nothing is selected, how did Xee and I do it on our lab 2?
             Entry selectedEntry = EntriesLV.SelectedItem as Entry;
-
-            int difficulty;
-            bool validDifficulty = int.TryParse(difficultyENT.Text, out difficulty);
-            if (validDifficulty)
+            if(selectedEntry != null) // we will edit an entry as long as something was selected
             {
-                var entryEditError = MauiProgram.ibl.EditEntry(clueENT.Text, answerENT.Text, difficulty, dateENT.Text, selectedEntry.Id);
-                if(entryEditError != EntryEditError.NoError)
+                int difficulty;
+                bool validDifficulty = int.TryParse(difficultyENT.Text, out difficulty);
+                if (validDifficulty)
                 {
-                    DisplayAlert("Error with Edit:", entryEditError.ToString(), "OK");
+                    var entryEditError = MauiProgram.ibl.EditEntry(clueENT.Text, answerENT.Text, difficulty, dateENT.Text, selectedEntry.Id);
+                    if(entryEditError != EntryEditError.NoError)
+                    {
+                        DisplayAlert("Error with Edit:", entryEditError.ToString(), "OK");
+                    }
+                }
+                else
+                {
+                    DisplayAlert("Error with Edit:", "Invalid Difficulty (0-2)", "OK");
                 }
             }
             else
             {
-                DisplayAlert("Error with Edit:", "Invalid Difficulty (0-2)", "OK");
+                DisplayAlert("Edit Entry Message:", "EntryNotFound", "Ok");
             }
         }
 

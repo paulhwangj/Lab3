@@ -15,14 +15,14 @@
             </Grid.ColumnDefinitions>
 
             <!--The buttons-->
-            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="20" VerticalOptions="Center">
-                <Button Text="Add Entry" Background ="Green" Margin="10" HeightRequest="200" BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="AddEntry"/>
-                <Button Text="Delete Entry" Background ="Red" Margin="10" HeightRequest="200" BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="DeleteEntry"/>
-                <Button Text="Edit Entry" Background ="Yellow" Margin="10" HeightRequest="200" BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="EditEntry"/>
+            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="20" VerticalOptions="CenterAndExpand">
+                <Button Text="Add Entry" Background ="LightBlue" Margin="10" HeightRequest="200" BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="AddEntry"/>
+                <Button Text="Delete Entry" Background ="LightBlue" Margin="10" HeightRequest="200" BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="DeleteEntry"/>
+                <Button Text="Edit Entry" Background ="LightBlue" Margin="10" HeightRequest="200" BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="EditEntry"/>
             </VerticalStackLayout>
 
             <!--List of Entries-->
-            <VerticalStackLayout  Grid.Row="0" Grid.Column="1" VerticalOptions="Start" Margin="10">
+            <VerticalStackLayout  Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Margin="10">
                 <ListView x:Name="EntriesLV" HeightRequest="500">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -62,7 +62,7 @@
             </VerticalStackLayout>
 
             <!--Buttons for Sorting-->
-            <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="EndAndExpand" HorizontalOptions="End" Margin="10" Padding="10">
+            <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="EndAndExpand" HorizontalOptions="Start" Margin="0" Padding="0">
                 <HorizontalStackLayout Margin="20" VerticalOptions="EndAndExpand" HorizontalOptions="End" Spacing="10">
                 <Button Text="Sort by Clue" Background ="LightBlue" Margin="10"  BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="SortByClue"/>
                 <Button Text="Sort by Answer" Background ="LightBlue" Margin="10"  BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="SortByAnswer"/>
@@ -70,7 +70,7 @@
             </VerticalStackLayout>
             
             <!--Form-->
-            <Border Stroke="Black" StrokeThickness="8" Grid.Row="1" Grid.ColumnSpan="2" Margin="20" Padding="20">
+            <Border Stroke="Black" StrokeThickness="8" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Padding="0">
                 <VerticalStackLayout VerticalOptions="Center">
                     <HorizontalStackLayout Margin="20" VerticalOptions="StartAndExpand" HorizontalOptions="Start" Spacing="10">
                         <Label Text="Clue:" FontSize="32.0"/>
