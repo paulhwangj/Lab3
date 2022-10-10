@@ -22,8 +22,8 @@
             </VerticalStackLayout>
 
             <!--List of Entries-->
-            <VerticalStackLayout  Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Margin="10">
-                <ListView x:Name="EntriesLV" HeightRequest="500">
+            <VerticalStackLayout  Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Margin="20">
+                <ListView x:Name="EntriesLV" HeightRequest="700">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -64,9 +64,9 @@
             <!--Buttons for Sorting-->
             <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="EndAndExpand" HorizontalOptions="Start" Margin="0" Padding="0">
                 <HorizontalStackLayout Margin="20" VerticalOptions="EndAndExpand" HorizontalOptions="End" Spacing="10">
-                <Button Text="Sort by Clue" Background ="LightBlue" Margin="10"  BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="SortByClue"/>
-                <Button Text="Sort by Answer" Background ="LightBlue" Margin="10"  BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="SortByAnswer"/>
-            </HorizontalStackLayout>
+                    <Button Text="Sort by Clue" Background ="LightBlue" Margin="10"  BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="SortByClue"/>
+                    <Button Text="Sort by Answer" Background ="LightBlue" Margin="10"  BackgroundColor="White" TextColor="Black" FontSize="24.0" BorderColor="Black" BorderWidth="5" Clicked="SortByAnswer"/>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
             
             <!--Form-->
